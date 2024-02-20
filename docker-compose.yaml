@@ -5,4 +5,3 @@ services:
     volumes:
       - ./:/data
       - /Users/emi/.ssh:/home/emi/.ssh
-      - ${PWD}/ansible/roles/server/tasks/files:/data/ansible/roles/server/tasks/files
