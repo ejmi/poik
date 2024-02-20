@@ -1,0 +1,4 @@
+- name: Server configurations
+  hosts: devops
+  roles:
+    - server

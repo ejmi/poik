@@ -1,0 +1,28 @@
+- name: Install rsync
+  ansible.builtin.package:
+    name: rsync
+    state: present
+
+- name: Create group 'poik'
+  ansible.builtin.group:
+    name: poik
+    state: present
+
+- name: Create user 'poik' and add to 'poik' group
+  ansible.builtin.user:
+    name: poik
+    group: poik
+    create_home: yes
+    home: /home/poik
+
+- name: Add authorized_keys 'poik' user
+  ansible.posix.authorized_key:
+    user: poik
+    state: present
+    key: "{{ ssh_key }}"
+
+- name: Add and change SSH configuration
+  import_tasks: ssh_conf.yml
+
+- name: Copy, decompress DB and unzip WordPress files
+  import_tasks: setup_files.yml

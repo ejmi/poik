@@ -1,0 +1,11 @@
+- name: Login only via SSH
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/ssh_config
+    regexp: '^PasswordAuthentication'
+    line: 'PasswordAuthentication no'
+    state: present
+
+- name: Restart SSH after configuration has changed
+  ansible.builtin.service:
+    name: ssh 
+    state: restarted

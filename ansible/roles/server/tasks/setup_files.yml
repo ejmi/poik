@@ -1,0 +1,21 @@
+- name: Copy files to server
+  ansible.builtin.synchronize:
+    src: "{{ role_path }}/tasks/files/"
+    dest: /home/poik/files
+
+- name: Decompress database archive
+  ansible.builtin.shell:
+    cmd: "gunzip /home/poik/files/*.sql.gz"
+  args:
+    chdir: /home/poik/files
+
+- name: Create 'zielonka' directory
+  ansible.builtin.file: 
+    path: /home/poik/zielonka
+    state: directory
+
+- name: Decompress WordPress archive
+  ansible.builtin.unarchive:
+    src: /home/poik/files/*.tar.bz2
+    dest: /home/poik/zielonka
+    remote_src: yes    
